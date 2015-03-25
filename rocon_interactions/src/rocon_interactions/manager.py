@@ -26,6 +26,7 @@ import uuid
 import rospy
 import rosgraph
 import unique_id
+import concert_msgs.msg as concert_msgs
 import rocon_interaction_msgs.msg as interaction_msgs
 import rocon_interaction_msgs.srv as interaction_srvs
 import rocon_uri
@@ -370,6 +371,7 @@ class InteractionsManager(object):
           - interaction.compatibility - __ROSDISTRO__ (depracated - use | in the compatibility variable itself)
           - interaction.parameters - __ROSBRIDGE_ADDRESS__
           - interaction.parameters - __ROSBRIDGE_PORT__
+          - interaction.parameters - __ROS_PARAM__
 
           :param interaction: parse this interaction scanning and replacing symbols.
           :type interaction: request_interactions_msgs.Interaction[]
@@ -377,12 +379,14 @@ class InteractionsManager(object):
           :returns: the updated interaction list
           :rtype: request_interactions_msgs.Interaction[]
         '''
+        shared_param_namespace = rospy.get_param(concert_msgs.Strings.PARAM_CONCERT_SHARED_PARAM_NAMESPACE)
         for interaction in interactions:
             interaction.name = interaction.name.replace('__WEBSERVER_ADDRESS__', self._parameters['webserver_address'])
             interaction.parameters = interaction.parameters.replace('__ROSBRIDGE_ADDRESS__',
                                                                     self._parameters['rosbridge_address'])
             interaction.parameters = interaction.parameters.replace('__ROSBRIDGE_PORT__',
                                                                     str(self._parameters['rosbridge_port']))
+            interaction.parameters = interaction.parameters.replace('__ROS_PARAM__', shared_param_namespace)
             #interaction.compatibility = interaction.compatibility.replace('%ROSDISTRO%',
             #                                                              rocon_python_utils.ros.get_rosdistro())
         return interactions
