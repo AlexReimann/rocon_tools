@@ -27,6 +27,7 @@ manipulation module.
 
 import os
 import yaml
+import rocon_python_utils
 
 # Local imports
 
@@ -37,13 +38,13 @@ import yaml
 
 def load_rules_into_dictionary():
     """
-      Load the rules in rocon_uri/src/rocon_uri/rules/rules.yaml into a python dictionary
+      Load the rules in rocon_uri/rules/rules.yaml into a python dictionary
       object.
 
       :returns: python dictionary of rules loaded from yaml.
       :rtype: str
     """
-    yaml_filename = os.path.join(os.path.dirname(__file__), 'rules', 'rules.yaml')
+    yaml_filename = rocon_python_utils.ros.find_resource('rocon_uri','rules.yaml')
     with open(yaml_filename) as f:
         yaml_rules = yaml.load(f)
     return yaml_rules

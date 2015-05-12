@@ -18,7 +18,10 @@ catkin_python_setup()
 # Installs
 ##############################################################################
 
-install(FILES src/rocon_uri/rules/rules.yaml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rules.yaml)
+install(DIRECTORY
+  rules
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 install(
     PROGRAMS 
