@@ -20,6 +20,7 @@
     - aldebaran_nao
     - robotis_op1
     - srb
+    - gocart_mini
   - mobile_device:
     - phone:
       - galaxy
